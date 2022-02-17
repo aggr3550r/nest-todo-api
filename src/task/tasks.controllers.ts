@@ -1,30 +1,39 @@
-import { Controller, Get, Body, Post, Put, Param } from "@nestjs/common";
+import { Controller, Get, Body, Post, Put, Param, HttpException, HttpStatus } from "@nestjs/common";
+import { CreateTaskDto, UpdateTaskDto } from "./dto/tasks.dto";
+import { TaskService } from "./tasks.service";
 
 
 
-
-@Controller('task/api')
+@Controller('api/tasks')
 export class TaskController{
+    constructor(private taskService: TaskService){}
+
+
 
     @Get()
     getAll(){
-        return "All the Tasks"
+        return this.taskService.findAll()
     }
 
     @Get(':taskId')
     getTask(@Param('taskId') taskId:string){
         console.log(taskId)
-        return `This is the task for ${taskId}`
+        const Task = this.taskService.findTask(taskId)
+
+
+        return Task
     }
 
     @Post()
-    createTask(@Body() body){
-        return `This is the body of a new tasks ${JSON.stringify(body)}`
+    createTask(@Body() body:CreateTaskDto){
+        const newTask = this.taskService.createTask(body)
+        return newTask
     }
 
     @Put(':taskId')
-    updateTask(@Param('taskId') taskId, @Body() body){
-        return `This is the Updated task ${JSON.stringify(body)} for task id ${JSON.stringify(taskId)}`
+    updateTask(@Param('taskId') taskId, @Body() body:UpdateTaskDto){
+        const updateTask = this.taskService.updateTask(taskId, body)
+        return updateTask
     }
 
 
