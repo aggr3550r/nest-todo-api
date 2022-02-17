@@ -14,4 +14,4 @@ import { UserModule } from 'src/user/users.module';
 
 })
 export class AppModule {}
-// console.log(`mongodb+srv://${process.env._UserName}:${process.env.Password}@cluster0.yxflz.mongodb.net/TaskDB?retryWrites=true&w=majority`)
+console.log(`mongodb+srv://${process.env._UserName}:${process.env.Password}@cluster0.yxflz.mongodb.net/TaskDB?retryWrites=true&w=majority`)
